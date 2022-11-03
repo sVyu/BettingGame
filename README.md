@@ -1,1 +1,1 @@
-# BettingGame_with_C
+# BettingGame (with C)
