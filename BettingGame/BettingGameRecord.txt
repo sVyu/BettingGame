@@ -1,5 +1,5 @@
-1 PSJ    1000
-2 JSB    500
-3 HGH    300
-4 AAA    200
-5 BBB    100
+1 YBH    24000
+2 HGH    1000
+3 PSJ    800
+4 JSB    300
+5 AAA    80

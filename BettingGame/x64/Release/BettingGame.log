@@ -1,0 +1,7 @@
+﻿  source.c
+d:\dev\c_programming\bettinggame\bettinggame\source.c(321): warning C4477: 'scanf_s' : 서식 문자열 '%s'에 'unsigned int' 형식의 인수가 필요하지만 variadic 인수 2의 형식이 'size_t'입니다.
+  d:\dev\c_programming\bettinggame\bettinggame\source.c(321): note: 이 인수는 버퍼 크기로 사용됩니다.
+  코드를 생성하고 있습니다.
+  All 20 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  코드를 생성했습니다.
+  BettingGame.vcxproj -> D:\Dev\c_programming\BettingGame\x64\Release\BettingGame.exe

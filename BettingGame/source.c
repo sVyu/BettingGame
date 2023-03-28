@@ -32,9 +32,11 @@ struct user {				// 사용자의 정보를 저장하기 위한 구조체입니다
 
 int main(void)
 {
-	system("title ______________________________________________________________________________________________    ★☆ Betting Game ☆★    _____________________________________________________________________________");	// cmd 타이틀 설정
-	system("mode con: cols=100 lines=25 ");			// cmd 창 크기 조절
+	system("title ____________________________________________________________    ★☆ Betting Game ☆★    __________________________________");	// cmd 타이틀 설정
+	system("mode con: cols=100 lines=26 ");			// cmd 창 크기 조절
 	game_start();				// game_start 함수 실행, 게임 시작 화면이 나옵니다
+
+	//game_race(100);
 	return 0;
 }
 
@@ -52,15 +54,15 @@ void game_start(void)
 		int check = 0;			// while 문을 조건에 맞게 탈출하기 위한 check 변수를 정의하였습니다
 		printf("\n\n\n");
 		SCTA(GSH(SOH), 0x000d);
-		printf("\t  ┌──、                                ┌───                  ┌──── \n");
+		printf("\t    ┌────＼                              ┌──────               ┌──────── \n");
 		SCTA(GSH(SOH), 0x000e);
-		printf("\t  │    │        ─┬─ ─┬─ ㅇ        │                        │         \n");
+		printf("\t    │    │          ──┬──  ──┬──  ㅇ     │                     │         \n");
 		SCTA(GSH(SOH), 0x000a);
-		printf("\t  ├──┴、┌─    │     │   │ ┌─┐ │  ──┐  ─┐┌─┬─┐├──── \n");
+		printf("\t    ├────┴＼  ┌──     │      │    │ ┌──┐ │  ────┐  ──┐ ┌──┬──┐ ├──────── \n");
 		SCTA(GSH(SOH), 0x000d);
-		printf("\t  │      │├─    │     │   │ │  │ │      │┌─┤│  │  ││         \n");
+		printf("\t    │      │  ├──     │      │    │ │  │ │      │ ┌──┤ │  │  │ │         \n");
 		SCTA(GSH(SOH), 0x0004);
-		printf("\t  └───┘└─    │     │   │ │  │ └───┘└─┘│  │  │└──── \n\n\n\n");
+		printf("\t    └──────┘  └──     │      │    │ │  │ └──────┘ └──┘ │  │  │ └──────── \n\n\n\n");
 		SCTA(GSH(SOH), 0x000f);
 		if (updown == 0)
 		{
@@ -160,9 +162,9 @@ void game_how(void)
 {
 	char check = ' ';		// J키를 눌러야만 이 함수를(화면을) 벗어나기 위해 정의된 check입니다
 	system("cls");
-	printf("									    ┌─────────┐\n");
+	printf("									    ┌──────────────────┐\n");
 	printf("									    │ ← 뒤로 가기 : J │\n");
-	printf("									    └─────────┘");
+	printf("									    └──────────────────┘");
 	printf("\n\n\n\t\t\t");
 	SCTA(GSH(SOH), 0x000d);
 	printf("★☆ Betting Game ☆★ ");
@@ -196,7 +198,9 @@ void game_how(void)
 
 void game_make_record(void)
 {
-	if ((fp = fopen("BettingGameRecord.txt", "r")) == NULL)		// 만약 게임을 처음 한다면 (기록이 없다면) 기록을 만들어 줍니다
+	//if ((fp = fopen("BettingGameRecord.txt", "r")) == NULL)		// 만약 게임을 처음 한다면 (기록이 없다면) 기록을 만들어 줍니다
+	fopen_s(&fp, "BettingGameRecord.txt", "r");
+	if (fp == NULL)													// 만약 게임을 처음 한다면 (기록이 없다면) 기록을 만들어 줍니다
 	{
 		struct user R[5];		// 5명의 기록을 저장하기 위한 5개의 레코드와 현 게임 이용자의 기록을 담거나 내림차순 용도의 NULL 레코드를 합쳐서 6개의 레코드로 구성된 R[6]입니다
 		int i;
@@ -206,40 +210,43 @@ void game_make_record(void)
 			if (i == 0)
 			{
 				R[i].ranking = 1;
-				strcpy(R[i].id, "PSJ");
+				strncpy_s(R[i].id, id_size, "HGH", id_size);
 				R[i].score = 1000;
 			}
 			else if (i == 1)
 			{
 				R[i].ranking = 2;
-				strcpy(R[i].id, "JSB");
-				R[i].score = 500;
+				strncpy_s(R[i].id, id_size, "PSJ", id_size);
+				R[i].score = 800;
 			}
 			else if (i == 2)
 			{
 				R[i].ranking = 3;
-				strcpy(R[i].id, "HGH");
+				strncpy_s(R[i].id, id_size, "JSB", id_size);
 				R[i].score = 300;
 			}
 			else if (i == 3)
 			{
 				R[i].ranking = 4;
-				strcpy(R[i].id, "AAA");
-				R[i].score = 200;
+				//strcpy(R[i].id, "AAA");
+				strncpy_s(R[i].id, id_size, "AAA", id_size);
+				R[i].score = 80;
 			}
 			else
 			{
 				R[i].ranking = 5;
-				strcpy(R[i].id, "BBB");
-				R[i].score = 100;
+				//strcpy(R[i].id, "BBB");
+				strncpy_s(R[i].id, id_size, "BBB", id_size);
+				R[i].score = 50;
 			}
 		}
-		fp = fopen("BettingGameRecord.txt", "w");
+		//fp = fopen("BettingGameRecord.txt", "w");
+		fopen_s(&fp, "BettingGameRecord.txt", "w");
 		for (i = 0; i < 5; i++)
 			fprintf(fp, "%d %-6s %d\n", R[i].ranking, R[i].id, R[i].score);		// 파일에 데이터를 저장합니다
-
-		fclose(fp);
+		//fclose(fp);
 	}
+	fclose(fp);
 }
 
 void game_record_see(void)
@@ -248,9 +255,9 @@ void game_record_see(void)
 	char id[6] = { "\0" };
 	char check = ' ';
 	system("cls");
-	printf("									    ┌─────────┐\n");
+	printf("									    ┌──────────────────┐\n");
 	printf("									    │ ← 뒤로 가기 : J │\n");
-	printf("									    └─────────┘\n");
+	printf("									    └──────────────────┘\n");
 	SCTA(GSH(SOH), 0x000b);
 	printf("\n\n\t\t\t\t\t   ☆ 순위 ☆\n\n");
 	SCTA(GSH(SOH), 0x000f);
@@ -259,10 +266,12 @@ void game_record_see(void)
 	printf("\t\t\t\t순위	     아이디	   점수\n");
 	SCTA(GSH(SOH), 0x000f);
 	printf("\t\t\t-----------------------------------------------\n\n");
-	fp = fopen("BettingGameRecord.txt", "r");
+	//fp = fopen("BettingGameRecord.txt", "r");
+	fopen_s(&fp, "BettingGameRecord.txt", "r");
 	for (i = 0; i < 5; i++)
 	{
-		fscanf(fp, "%d %s %d\n", &ranking, id, &score);		//파일에서 정수(ranking), 문자열, 정수(score)를 데이터로 읽습니다
+		//fscanf(fp, "%d %s %d\n", &ranking, id, &score);		//파일에서 정수(ranking), 문자열, 정수(score)를 데이터로 읽습니다
+		fscanf_s(fp, "%d %s %d\n", &ranking, id, id_size, &score);		//파일에서 정수(ranking), 문자열, 정수(score)를 데이터로 읽습니다
 		if (strcmp(id, id_box) == 0)
 			SCTA(GSH(SOH), 0x000d);
 		else
@@ -282,15 +291,15 @@ void game_record_see(void)
 
 void game_id(void)
 {
+#define id_length 20
 	int check = 0;					// check는 1이 되면 함수가 종료되게 설정하기 위한 변수입니다
 	int id_check_i;					// 아이디가 영어 대문자로 되어있는지 확인하기 위한 변수입니다
-	int k = 0;						// id_check[20]을 NULL 배열로 만들기 위한 변수입니다
 	int i = 0;						// 아이디를 잘못 입력했을 경우 경고문을 출력하고 그 횟수를 저장하기 위한 변수 i입니다
-	char id_check[20] = { "\0" };		// 아이디 자리수 체크용 문자열입니다
 	while (check == 0)
 	{
 		fflush(stdin);					// 버퍼를 비웁니다
-		for (k = 0; k < 20; k++)
+		char id_check[id_length] = { "\0" };		// 아이디 자리수 체크용 문자열입니다
+		for (int k = 0; k < id_length; k++)
 			id_check[k] = '\0';
 		check = 1;
 		system("cls");
@@ -304,20 +313,26 @@ void game_id(void)
 		{
 			SCTA(GSH(SOH), 0x000c);
 			printf("\n\t\t\t\t     조건에 맞게 만드십시오(%d)\n\n\t\t\t\t\t       ", i);
+			//printf("\n\t\t\t\t     조건에 맞게 만드십시오\n\n\t\t\t\t\t       ");
 			SCTA(GSH(SOH), 0x000f);
 		}
 		SCTA(GSH(SOH), 0x000e);
-		gets(id_check);
+		//gets_s(id_check, sizeof(id_check));		# 배열 사이즈를 초과하면 에러 발생
+		scanf_s("%s", id_check, sizeof(id_check));
+		//printf("%d", strlen(id_check));
+
 		SCTA(GSH(SOH), 0x000f);
-		if ((id_check[2] == NULL) || id_check[id_size - 1] != NULL)			// id가 2글자 이하인 경우 또는 5글자가 넘는 경우 다시 입력하게 했습니다
+		//if ((id_check[2] == '\0') || id_check[id_size-1] != '\0')			// id가 2글자 이하인 경우 또는 5글자가 넘는 경우 다시 입력하게 했습니다
+		if ((strlen(id_check) <= 2) || (strlen(id_check) >= id_size))
 		{
 			check = 0;
 			i++;
 			continue;
 		}
-		strncpy(id_box, id_check, id_size);
+		//strncpy(id_box, id_check, id_size);
+		strncpy_s(id_box, id_size, id_check, id_size);
 
-		for (id_check_i = 0; id_box[id_check_i] != NULL; id_check_i++)
+		for (id_check_i = 0; id_box[id_check_i] != '\0'; id_check_i++)
 		{
 			if (isupper(id_box[id_check_i]) == 0)	// 영어 대문자가 아닌 글자가 있으면 다시 입력하게 합니다
 			{
@@ -352,15 +367,15 @@ void game_select(void)
 
 		printf("\n\n");
 		SCTA(GSH(SOH), 0x0003);
-		printf("\t┌─────────┐         ┌─────────┐         ┌─────────┐\n");
-		printf("\t│================= │         │                  │         │                  │\n");
-		printf("\t│  Z I             │         │================= │         │        ㅇ        │\n");
-		printf("\t│================= │         │  ┌┐ ┌┐ ┌┐  │         │                  │\n");
-		printf("\t│  Z I             │         │  ││ ││ ││  │         │      ㅇ   ㅇ     │\n");
-		printf("\t│================= │         │    │   │   │  │         │                  │\n");
-		printf("\t│  Z I             │         │================= │         │   ㅇ   ㅇ    ㅇ  │\n");
-		printf("\t│================= │         │                  │         │                  │\n");
-		printf("\t└─────────┘         └─────────┘         └─────────┘\n\n");
+		printf("\t┌──────────────────┐           ┌─────────────────┐             ┌──────────────────┐ \n");
+		printf("\t│ =================│           │                 │             │                  │ \n");
+		printf("\t│  Z I             │           │ ================│             │        ㅇ        │ \n");
+		printf("\t│ =================│           │  ┌─┐  ┌─┐  ┌─┐  │             │                  │ \n");
+		printf("\t│  Z I             │           │  │ │  │ │  │ │  │             │      ㅇ   ㅇ     │ \n");
+		printf("\t│ =================│           │    │    │    │  │             │                  │ \n");
+		printf("\t│  Z I             │           │ ================│             │   ㅇ   ㅇ    ㅇ  │ \n");
+		printf("\t│ =================│           │                 │             │                  │ \n");
+		printf("\t└──────────────────┘           └─────────────────┘             └──────────────────┘ \n\n");
 		SCTA(GSH(SOH), 0x000f);
 		printf("\t          1                              2                               3\n");
 		SCTA(GSH(SOH), 0x000a);
@@ -423,10 +438,21 @@ void game_select(void)
 
 int game_race(int coin)
 {
-	char a[60] = { "Z  I" };
-	char b[60] = { "Z  I" };
-	char c[60] = { "Z  I" };
-	int i;						// 배열 출력용 변수입니다
+#define race_width 60
+
+	char a[race_width] = { "Z  I" };
+	char b[race_width] = { "Z  I" };
+	char c[race_width] = { "Z  I" };
+
+	for (int idx = 4; idx < (race_width - 1); idx++) {
+		a[idx] = ' ';
+		b[idx] = ' ';
+		c[idx] = ' ';
+	}
+	a[race_width - 1] = '\0';
+	b[race_width - 1] = '\0';
+	c[race_width - 1] = '\0';
+
 	int copy_coin = coin;		// 코인 값을 저장할 변수입니다
 	int a_check[2] = { 0 };		// 문자의 위치를 숫자로 나타내고 기억할 변수입니다
 	int b_check[2] = { 0 };
@@ -445,28 +471,25 @@ int game_race(int coin)
 		printf("\t\t  =============================================================");
 		SCTA(GSH(SOH), 0x000b);
 		printf("\n\t\t     I\n\t\t1 ");
+		/*
 		for (i = 0; i < 60; i++)
 		{
 			printf("%c", a[i]);
-		}
+		}*/
+		printf("%s", a);
+
 		printf("\n\t\t     I");
 		SCTA(GSH(SOH), 0x000e);
 		printf("\n\t\t  =============================================================");
 		SCTA(GSH(SOH), 0x000c);
 		printf("\n\t\t     I\n\t\t2 ");
-		for (i = 0; i < 60; i++)
-		{
-			printf("%c", b[i]);
-		}
+		printf("%s", b);
 		printf("\n\t\t     I");
 		SCTA(GSH(SOH), 0x000e);
 		printf("\n\t\t  =============================================================");
 		SCTA(GSH(SOH), 0x000d);
 		printf("\n\t\t     I\n\t\t3 ");
-		for (i = 0; i < 60; i++)
-		{
-			printf("%c", c[i]);
-		}
+		printf("%s", c);
 		printf("\n\t\t     I");
 		SCTA(GSH(SOH), 0x000e);
 		printf("\n\t\t  =============================================================\n\n\t\t\t\t");
@@ -513,23 +536,23 @@ int game_race(int coin)
 			printf("번 말 선택하셨습니다\n\t\t\t\t");
 		}
 
-		if (a_check[1] == 59 || b_check[1] == 59 || c_check[1] == 59)
+		if (a_check[1] == (race_width - 2) || b_check[1] == (race_width - 2) || c_check[1] == (race_width - 2))
 		{
 			SCTA(GSH(SOH), 0x000f);
 			printf("   1등은");
-			if (a_check[1] == 59)
+			if (a_check[1] == (race_width - 2))
 			{
 				SCTA(GSH(SOH), 0x000b);
 				printf(" 1번");
 				winner_check[0] = 1;
 			}
-			if (b_check[1] == 59)
+			if (b_check[1] == (race_width - 2))
 			{
 				SCTA(GSH(SOH), 0x000c);
 				printf(" 2번");
 				winner_check[1] = 1;
 			}
-			if (c_check[1] == 59)
+			if (c_check[1] == (race_width - 2))
 			{
 				SCTA(GSH(SOH), 0x000d);
 				printf(" 3번");
@@ -555,24 +578,24 @@ int game_race(int coin)
 		}
 		srand((unsigned)time(NULL));						// 시간에 따라 난수 발생
 
-		if ((a_check[1] = (rand() % 6 + 4 + a_check[0])) > 59)	// 만약 (0부터 5까지 중 하나의 난수)+ 4 + 기존 문자의 위치(a_check[0])가 59를 넘으면
-			a_check[1] = 59;								// 다음에 문자를 저장시킬 위치는 a_check[1] = 59    배열의 크기가 60이므로( 0 ~ 59 )
+		if ((a_check[1] = (rand() % 6 + 4 + a_check[0])) > race_width - 2)	// 만약 (0부터 5까지 중 하나의 난수)+ 4 + 기존 문자의 위치(a_check[0])가 59를 넘으면
+			a_check[1] = race_width - 2;								// 다음에 문자를 저장시킬 위치는 a_check[1] = 59    배열의 크기가 60이므로( 0 ~ 59 )
 		a[a_check[1]] = a[a_check[0]];						// 기존 문자 위치에서의 문자를 다음 위치로 대입합니다
-		a[a_check[0]] = '\0';								// 기존 문자 위치에 널 값 대입합니다
+		a[a_check[0]] = ' ';								// 기존 문자 위치에 공백을 대입합니다
 		a_check[0] = a_check[1];							// 문자가 이동된 위치를 기존 문자의 위치로 대입합니다
 
-		if ((b_check[1] = (rand() % 6 + 4 + b_check[0])) > 59)
-			b_check[1] = 59;
+		if ((b_check[1] = (rand() % 6 + 4 + b_check[0])) > race_width - 2)
+			b_check[1] = race_width - 2;
 		b[b_check[1]] = b[b_check[0]];
-		b[b_check[0]] = '\0';
+		b[b_check[0]] = ' ';
 		b_check[0] = b_check[1];
 
-		if ((c_check[1] = (rand() % 6 + 4 + c_check[0])) > 59)
-			c_check[1] = 59;
+		if ((c_check[1] = (rand() % 6 + 4 + c_check[0])) > race_width - 2)
+			c_check[1] = race_width - 2;
 		c[c_check[1]] = c[c_check[0]];
-		c[c_check[0]] = '\0';
+		c[c_check[0]] = ' ';
 		c_check[0] = c_check[1];
-		Sleep(1000);				// 1000/1000초 즉 1초 정지합니다
+		Sleep(500);				// 1000/1000초 즉 1초 정지합니다
 	}
 }
 
@@ -591,7 +614,8 @@ int game_777(int coin)
 	char number_big[10][height][width] = { "\0" };		// 숫자를 특수문자로 크게 표시하기 위한 배열입니다
 	system("cls");
 
-	strcpy(number_big[0][0], " ┌─────┐");
+	/*
+	strcpy(number_big[0][0], " ┌―――――┐");
 	strcpy(number_big[0][1], " │          │");
 	strcpy(number_big[0][2], " │          │");
 	strcpy(number_big[0][3], " │          │");
@@ -599,103 +623,203 @@ int game_777(int coin)
 	strcpy(number_big[0][5], " │          │");
 	strcpy(number_big[0][6], " │          │");
 	strcpy(number_big[0][7], " │          │");
-	strcpy(number_big[0][8], " └─────┘");
+	strcpy(number_big[0][8], " └―――――┘");
 
-	strcpy(number_big[1][0], "             │");
-	strcpy(number_big[1][1], "             │");
-	strcpy(number_big[1][2], "             │");
-	strcpy(number_big[1][3], "             │");
-	strcpy(number_big[1][4], "             │");
-	strcpy(number_big[1][5], "             │");
-	strcpy(number_big[1][6], "             │");
-	strcpy(number_big[1][7], "             │");
-	strcpy(number_big[1][8], "             │");
+	strcpy(number_big[1][0], "       │      ");
+	strcpy(number_big[1][1], "      /│      ");
+	strcpy(number_big[1][2], "     / │      ");
+	strcpy(number_big[1][3], "       │      ");
+	strcpy(number_big[1][4], "       │      ");
+	strcpy(number_big[1][5], "       │      ");
+	strcpy(number_big[1][6], "       │      ");
+	strcpy(number_big[1][7], "       │      ");
+	strcpy(number_big[1][8], "  ――――――");
 
-	strcpy(number_big[2][0], " ──────┐");
+	strcpy(number_big[2][0], " ――――――┐");
 	strcpy(number_big[2][1], "             │");
 	strcpy(number_big[2][2], "             │");
 	strcpy(number_big[2][3], "             │");
-	strcpy(number_big[2][4], " ┌─────┘");
+	strcpy(number_big[2][4], " ┌――――――");
 	strcpy(number_big[2][5], " │            ");
 	strcpy(number_big[2][6], " │            ");
 	strcpy(number_big[2][7], " │            ");
-	strcpy(number_big[2][8], " └──────");
+	strcpy(number_big[2][8], " └――――――");
 
-	strcpy(number_big[3][0], " ──────┐");
+	strcpy(number_big[3][0], " ――――――┐");
 	strcpy(number_big[3][1], "             │");
 	strcpy(number_big[3][2], "             │");
 	strcpy(number_big[3][3], "             │");
-	strcpy(number_big[3][4], " ──────┤");
+	strcpy(number_big[3][4], " ――――――│");
 	strcpy(number_big[3][5], "             │");
 	strcpy(number_big[3][6], "             │");
 	strcpy(number_big[3][7], "             │");
-	strcpy(number_big[3][8], " ──────┘");
+	strcpy(number_big[3][8], " ――――――┘");
 
 	strcpy(number_big[4][0], " │          │");
 	strcpy(number_big[4][1], " │          │");
 	strcpy(number_big[4][2], " │          │");
 	strcpy(number_big[4][3], " │          │");
-	strcpy(number_big[4][4], " └─────┤");
-	strcpy(number_big[4][5], "             │");
-	strcpy(number_big[4][6], "             │");
-	strcpy(number_big[4][7], "             │");
-	strcpy(number_big[4][8], "             │");
+	strcpy(number_big[4][4], " └―――――│");
+	strcpy(number_big[4][5], "            │");
+	strcpy(number_big[4][6], "            │");
+	strcpy(number_big[4][7], "            │");
+	strcpy(number_big[4][8], "            │");
 
-	strcpy(number_big[5][0], " ┌──────");
+	strcpy(number_big[5][0], " ┌――――――");
 	strcpy(number_big[5][1], " │            ");
 	strcpy(number_big[5][2], " │            ");
 	strcpy(number_big[5][3], " │            ");
-	strcpy(number_big[5][4], " └─────┐");
+	strcpy(number_big[5][4], " └――――――");
 	strcpy(number_big[5][5], "             │");
 	strcpy(number_big[5][6], "             │");
 	strcpy(number_big[5][7], "             │");
-	strcpy(number_big[5][8], " ──────┘");
+	strcpy(number_big[5][8], " ――――――┘");
 
-	strcpy(number_big[6][0], " │            ");
-	strcpy(number_big[6][1], " │            ");
-	strcpy(number_big[6][2], " │            ");
-	strcpy(number_big[6][3], " │            ");
-	strcpy(number_big[6][4], " ├─────┐");
+	strcpy(number_big[6][0], " │           ");
+	strcpy(number_big[6][1], " │           ");
+	strcpy(number_big[6][2], " │           ");
+	strcpy(number_big[6][3], " │           ");
+	strcpy(number_big[6][4], " │―――――┐");
 	strcpy(number_big[6][5], " │          │");
 	strcpy(number_big[6][6], " │          │");
 	strcpy(number_big[6][7], " │          │");
-	strcpy(number_big[6][8], " └─────┘");
+	strcpy(number_big[6][8], " └―――――┘");
 
 
-	strcpy(number_big[7][0], " ┌─────┐");
+	strcpy(number_big[7][0], " ┌―――――┐");
 	strcpy(number_big[7][1], " │          │");
 	strcpy(number_big[7][2], " │          │");
 	strcpy(number_big[7][3], " │          │");
 	strcpy(number_big[7][4], " │          │");
-	strcpy(number_big[7][5], "             │");
-	strcpy(number_big[7][6], "             │");
-	strcpy(number_big[7][7], "             │");
-	strcpy(number_big[7][8], "             │");
+	strcpy(number_big[7][5], "            │");
+	strcpy(number_big[7][6], "            │");
+	strcpy(number_big[7][7], "            │");
+	strcpy(number_big[7][8], "            │");
 
-	strcpy(number_big[8][0], " ┌─────┐");
+	strcpy(number_big[8][0], " ┌―――――┐");
 	strcpy(number_big[8][1], " │          │");
 	strcpy(number_big[8][2], " │          │");
 	strcpy(number_big[8][3], " │          │");
-	strcpy(number_big[8][4], " ├─────┤");
+	strcpy(number_big[8][4], " │―――――│");
 	strcpy(number_big[8][5], " │          │");
 	strcpy(number_big[8][6], " │          │");
 	strcpy(number_big[8][7], " │          │");
-	strcpy(number_big[8][8], " └─────┘");
+	strcpy(number_big[8][8], " └―――――┘");
 
-	strcpy(number_big[9][0], " ┌─────┐");
+	strcpy(number_big[9][0], " ┌―――――┐");
 	strcpy(number_big[9][1], " │          │");
 	strcpy(number_big[9][2], " │          │");
 	strcpy(number_big[9][3], " │          │");
-	strcpy(number_big[9][4], " └─────┤");
-	strcpy(number_big[9][5], "             │");
-	strcpy(number_big[9][6], "             │");
-	strcpy(number_big[9][7], "             │");
-	strcpy(number_big[9][8], "             │");
+	strcpy(number_big[9][4], " └―――――│");
+	strcpy(number_big[9][5], "            │");
+	strcpy(number_big[9][6], "            │");
+	strcpy(number_big[9][7], "            │");
+	strcpy(number_big[9][8], "            │");
+	*/
+
+	strncpy_s(number_big[0][0], width, " ┌―――――┐", width);
+	strncpy_s(number_big[0][1], width, " │          │", width);
+	strncpy_s(number_big[0][2], width, " │          │", width);
+	strncpy_s(number_big[0][3], width, " │          │", width);
+	strncpy_s(number_big[0][4], width, " │          │", width);
+	strncpy_s(number_big[0][5], width, " │          │", width);
+	strncpy_s(number_big[0][6], width, " │          │", width);
+	strncpy_s(number_big[0][7], width, " │          │", width);
+	strncpy_s(number_big[0][8], width, " └―――――┘", width);
+
+	strncpy_s(number_big[1][0], width, "       │      ", width);
+	strncpy_s(number_big[1][1], width, "      /│      ", width);
+	strncpy_s(number_big[1][2], width, "     / │      ", width);
+	strncpy_s(number_big[1][3], width, "       │      ", width);
+	strncpy_s(number_big[1][4], width, "       │      ", width);
+	strncpy_s(number_big[1][5], width, "       │      ", width);
+	strncpy_s(number_big[1][6], width, "       │      ", width);
+	strncpy_s(number_big[1][7], width, "       │      ", width);
+	strncpy_s(number_big[1][8], width, "  ――――――", width);
+
+	strncpy_s(number_big[2][0], width, " ――――――┐", width);
+	strncpy_s(number_big[2][1], width, "             │", width);
+	strncpy_s(number_big[2][2], width, "             │", width);
+	strncpy_s(number_big[2][3], width, "             │", width);
+	strncpy_s(number_big[2][4], width, " ┌――――――", width);
+	strncpy_s(number_big[2][5], width, " │            ", width);
+	strncpy_s(number_big[2][6], width, " │            ", width);
+	strncpy_s(number_big[2][7], width, " │            ", width);
+	strncpy_s(number_big[2][8], width, " └――――――", width);
+
+	strncpy_s(number_big[3][0], width, " ――――――┐", width);
+	strncpy_s(number_big[3][1], width, "             │", width);
+	strncpy_s(number_big[3][2], width, "             │", width);
+	strncpy_s(number_big[3][3], width, "             │", width);
+	strncpy_s(number_big[3][4], width, " ――――――│", width);
+	strncpy_s(number_big[3][5], width, "             │", width);
+	strncpy_s(number_big[3][6], width, "             │", width);
+	strncpy_s(number_big[3][7], width, "             │", width);
+	strncpy_s(number_big[3][8], width, " ――――――┘", width);
+	strncpy_s(number_big[4][0], width, " │          │", width);
+	strncpy_s(number_big[4][1], width, " │          │", width);
+	strncpy_s(number_big[4][2], width, " │          │", width);
+	strncpy_s(number_big[4][3], width, " │          │", width);
+	strncpy_s(number_big[4][4], width, " └―――――│", width);
+	strncpy_s(number_big[4][5], width, "            │", width);
+	strncpy_s(number_big[4][6], width, "            │", width);
+	strncpy_s(number_big[4][7], width, "            │", width);
+	strncpy_s(number_big[4][8], width, "            │", width);
+
+	strncpy_s(number_big[5][0], width, " ┌――――――", width);
+	strncpy_s(number_big[5][1], width, " │            ", width);
+	strncpy_s(number_big[5][2], width, " │            ", width);
+	strncpy_s(number_big[5][3], width, " │            ", width);
+	strncpy_s(number_big[5][4], width, " └――――――", width);
+	strncpy_s(number_big[5][5], width, "             │", width);
+	strncpy_s(number_big[5][6], width, "             │", width);
+	strncpy_s(number_big[5][7], width, "             │", width);
+	strncpy_s(number_big[5][8], width, " ――――――┘", width);
+
+	strncpy_s(number_big[6][0], width, " │           ", width);
+	strncpy_s(number_big[6][1], width, " │           ", width);
+	strncpy_s(number_big[6][2], width, " │           ", width);
+	strncpy_s(number_big[6][3], width, " │           ", width);
+	strncpy_s(number_big[6][4], width, " │―――――┐", width);
+	strncpy_s(number_big[6][5], width, " │          │", width);
+	strncpy_s(number_big[6][6], width, " │          │", width);
+	strncpy_s(number_big[6][7], width, " │          │", width);
+	strncpy_s(number_big[6][8], width, " └―――――┘", width);
+
+	strncpy_s(number_big[7][0], width, " ┌―――――┐", width);
+	strncpy_s(number_big[7][1], width, " │          │", width);
+	strncpy_s(number_big[7][2], width, " │          │", width);
+	strncpy_s(number_big[7][3], width, " │          │", width);
+	strncpy_s(number_big[7][4], width, " │          │", width);
+	strncpy_s(number_big[7][5], width, "            │", width);
+	strncpy_s(number_big[7][6], width, "            │", width);
+	strncpy_s(number_big[7][7], width, "            │", width);
+	strncpy_s(number_big[7][8], width, "            │", width);
+
+	strncpy_s(number_big[8][0], width, " ┌―――――┐", width);
+	strncpy_s(number_big[8][1], width, " │          │", width);
+	strncpy_s(number_big[8][2], width, " │          │", width);
+	strncpy_s(number_big[8][3], width, " │          │", width);
+	strncpy_s(number_big[8][4], width, " │―――――│", width);
+	strncpy_s(number_big[8][5], width, " │          │", width);
+	strncpy_s(number_big[8][6], width, " │          │", width);
+	strncpy_s(number_big[8][7], width, " │          │", width);
+	strncpy_s(number_big[8][8], width, " └―――――┘", width);
+
+	strncpy_s(number_big[9][0], width, " ┌―――――┐", width);
+	strncpy_s(number_big[9][1], width, " │          │", width);
+	strncpy_s(number_big[9][2], width, " │          │", width);
+	strncpy_s(number_big[9][3], width, " │          │", width);
+	strncpy_s(number_big[9][4], width, " └―――――│", width);
+	strncpy_s(number_big[9][5], width, "            │", width);
+	strncpy_s(number_big[9][6], width, "            │", width);
+	strncpy_s(number_big[9][7], width, "            │", width);
+	strncpy_s(number_big[9][8], width, "            │", width);
 
 	srand((unsigned)time(NULL));
 
-	for (i = 0; i < 3; i++)
-		number[i] = rand() % 10;		// number[0], number[1], number[2] 에 각각 0부터 9까지의 난수를 저장합니다
+	//for (i = 0; i < 3; i++)
+	//	number[i] = rand() % 10;		// number[0], number[1], number[2] 에 각각 0부터 9까지의 난수를 저장합니다
 
 	while (1)
 	{
@@ -706,7 +830,13 @@ int game_777(int coin)
 		SCTA(GSH(SOH), 0x000f);
 		printf("\t\t\t=====================================================\n\n\t\t\t");
 		for (i = stop; i < 3; i++)
-			number[i] = (number[i] + rand() % 10) % 10;
+			number[i] = (number[i] + rand()) % 10;
+
+		/*
+		number[0] = 0;
+		number[1] = 1;
+		number[2] = 2;
+		*/
 
 		for (i = 0; i < height; i++)
 		{
@@ -722,7 +852,7 @@ int game_777(int coin)
 					SCTA(GSH(SOH), 0x000f);
 				else
 					SCTA(GSH(SOH), 0x000a);
-				printf("%s  ", number_big[number[j]][i]);
+				printf(" %s   ", number_big[number[j]][i]);
 			}
 			printf("\n\t\t\t");
 		}
@@ -821,12 +951,12 @@ int game_777(int coin)
 
 int game_wbg(int coin)
 {
-#define width 12
-#define length 7
+#define wbg_width 12
+#define wbg_length 7
 
-	char wbg[length][width] = { "\0" };	// 게임을 구현하기 위한 문자 배열입니다
+	char wbg[wbg_length][wbg_width] = { "\0" };	// 게임을 구현하기 위한 문자 배열입니다
 	int i = 0, j = 0;					// for문에서 쓰기 위한 변수 i, j 입니다
-	int ball[3] = { 0 };					// 공의 위치를 숫자로 표현하고 저장하기 위한 배열입니다
+	int ball[3] = { 0 };				// 공의 위치를 숫자로 표현하고 저장하기 위한 배열입니다
 	int std = 5;						// 공의 위치를 표현하기 위한 기준, 변수 std입니다
 	int k = 0, count = 0;				// 조건에 맞게 공의 위치를 저장할 k, count입니다
 	int box = 0;						// 몇 번 박스에 들어갔는지를 저장하기 위한 변수입니다
@@ -870,18 +1000,25 @@ int game_wbg(int coin)
 		printf("\n\n");
 		SCTA(GSH(SOH), 0x000a);
 		printf("\t\t\t\t\t  [공은 어디로]\n\n\t\t\t");
-		for (i = 0; i < length; i++)				// printf문을 위한 for문입니다
+		for (i = 0; i < wbg_length; i++)				// printf문을 위한 for문입니다
 		{
-			for (j = 0; j < width; j++)
+			for (j = 0; j < wbg_width; j++)
 			{
-				if (wbg[i][j] == 'o')
+				if (wbg[i][j] == 'o') {
 					SCTA(GSH(SOH), 0x000e);
-				else if (wbg[i][j] == 'A')
+					printf("   %c", wbg[i][j]);
+				}
+				else if (wbg[i][j] == 'A') {
 					SCTA(GSH(SOH), 0x000d);
-				else
+					printf("   %c", wbg[i][j]);
+				}
+				else if (wbg[i][j] == '\0') {
+					printf("    ");
+				}
+				else {
 					SCTA(GSH(SOH), 0x000b);
-				printf("   %c", wbg[i][j]);
-
+					printf("   %c", wbg[i][j]);
+				}
 				if (wbg[i][j] == 'o')
 					wbg[i][j] = '\0';
 			}
@@ -890,7 +1027,6 @@ int game_wbg(int coin)
 		}
 		SCTA(GSH(SOH), 0x000a);
 		printf("   1\t       2\t       3\t   4\n");
-
 
 		if (coin_put == 0)
 		{
@@ -997,19 +1133,23 @@ void game_record_regist(int coin)
 	int b;			// 스와핑 알고리즘에서 쓸 값을 저장하기 위한 변수입니다
 	char id_NULL[id_size] = { "\0" };		// 빈 문자열입니다
 
-	fp = fopen("BettingGameRecord.txt", "r");
+	//fp = fopen("BettingGameRecord.txt", "r");
+	fopen_s(&fp, "BettingGameRecord.txt", "r");
 
 	for (a = 0; a < 5; a++)
-		fscanf(fp, " %d %s %d", &R[a].ranking, R[a].id, &R[a].score);
+		//fscanf(fp, " %d %s %d", &R[a].ranking, R[a].id, &R[a].score);
+		fscanf_s(fp, " %d %s %d", &R[a].ranking, R[a].id, id_size, &R[a].score);
 
 	fclose(fp);
 
 	if (R[4].score < coin)
 	{
-		strncpy(R[4].id, id_box, id_size);
+		//strncpy(R[4].id, id_box, id_size);
+		strncpy_s(R[4].id, id_size, id_box, id_size);
 		R[4].score = coin;
 
-		fp = fopen("BettingGameRecord.txt", "w");
+		//fp = fopen("BettingGameRecord.txt", "w");
+		fopen_s(&fp, "BettingGameRecord.txt", "w");
 		for (a = 3; a >= 0; a--)
 		{
 			if (R[a].score < coin)
@@ -1018,9 +1158,15 @@ void game_record_regist(int coin)
 				R[a].score = coin;
 				R[a + 1].score = b;
 
+				/*
 				strncpy(id_NULL, R[a].id, id_size);
 				strncpy(R[a].id, id_box, id_size);
 				strncpy(R[a + 1].id, id_NULL, id_size);
+				*/
+
+				strncpy_s(id_NULL, id_size, R[a].id, id_size);
+				strncpy_s(R[a].id, id_size, id_box, id_size);
+				strncpy_s(R[a + 1].id, id_size, id_NULL, id_size);
 			}
 
 			else
